@@ -17,7 +17,7 @@ spec:
       - name: ghcr-secret
       containers:
       - name: grade-submission-api
-        image: ghcr.io/yanuarrahman04/simple-gitops-argocd:cad005a7c9aed571969eb9db001c62b8fcf80098
+        image: ghcr.io/yanuarrahman04/simple-gitops-argocd:159050fefa3a88bbf3f3c3f360f29ac098b4f2c9
         ports:
         - containerPort: 3000
         readinessProbe:     #dijalankan di awal ketika pod dibuat, untuk mengecek apakah aplikasi sudah siap menerima traffic atau belum, jika belum maka traffic tidak akan diarahkan ke pod tersebut
