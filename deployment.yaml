@@ -4,7 +4,7 @@ metadata:
   name: grade-submission-api
   namespace: default
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: grade-submission-api
@@ -20,6 +20,24 @@ spec:
         image: ghcr.io/yanuarrahman04/simple-gitops-argocd:cad005a7c9aed571969eb9db001c62b8fcf80098
         ports:
         - containerPort: 3000
+        readinessProbe:     #dijalankan di awal ketika pod dibuat, untuk mengecek apakah aplikasi sudah siap menerima traffic atau belum, jika belum maka traffic tidak akan diarahkan ke pod tersebut
+            httpGet: # untuk mengecek apakah aplikasi sudah siap menerima traffic atau belum, jika belum maka traffic tidak akan diarahkan ke pod tersebut
+              path: /
+              port: 3000
+            initialDelaySeconds: 5 # prob dijalankan setelah detik 
+            periodSeconds: 5        # dicek setiap detik itu
+            timeoutSeconds: 2       # lebih dari 2 detik dianggap gagal
+            failureThreshold: 3
+
+         # livenessProbe: # di eksekusi ketika pod sudah dianggap siap /jalan, 
+          #     path: /
+          #     port: 80
+          #   initialDelaySeconds: 10
+          #   periodSeconds: 10
+          #   timeoutSeconds: 2
+          #   failureThreshold: 3
+
+            
         resources:
           limits:
             memory: "256Mi"
